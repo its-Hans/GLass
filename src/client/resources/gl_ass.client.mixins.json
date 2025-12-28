@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "ass.gl.mixin",
+  "client": [
+    "MixinWindow"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}

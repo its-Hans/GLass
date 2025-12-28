@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "${modid}",
+  "name": "${name}",
+  "version": "${version}",
+  "authors": [
+    "MakeCat"
+  ],
+  "environment": "client",
+  "depends": {
+  },
+  "icon": "assets/gl_ass/logo.png",
+  "mixins": [{
+      "environment": "client",
+      "config": "gl_ass.client.mixins.json"
+  }]
+}

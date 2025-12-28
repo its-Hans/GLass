@@ -1,0 +1,58 @@
+plugins {
+    id 'fabric-loom' version "${loom_version}"
+}
+
+java {
+    sourceCompatibility = targetCompatibility = java_version
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = Integer.valueOf(java_version)
+}
+
+repositories {
+    maven { url='https://maven.krysztal.dev/releases' }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+    mappings "net.fabricmc:yarn:${yarn_mappings}:v2"
+
+    modImplementation "net.fabricmc:fabric-loader:${loader_version}"
+}
+
+loom {
+    splitEnvironmentSourceSets()
+
+    mixin {
+        useLegacyMixinAp = false
+    }
+}
+
+def declInputs(TaskInputs inputs, Iterable<String> properties) {
+    inputs.properties(
+            properties.collectEntries {
+                [it, project[it]]
+            }
+    )
+}
+
+jar {
+    duplicatesStrategy = DuplicatesStrategy.WARN
+}
+
+processResources {
+    duplicatesStrategy = DuplicatesStrategy.FAIL
+
+    declInputs(inputs, [
+            "name",
+            "modid",
+            "version"
+    ])
+
+    filesMatching('fabric.mod.json') {
+        expand(inputs.properties) {
+            escapeBackslash = true
+        }
+    }
+}

@@ -1,0 +1,12 @@
+.idea/
+
+.kotlin/
+
+.gradle/
+build/
+run/
+
+*.hprof
+hs_err_pid*
+
+desktop.ini
