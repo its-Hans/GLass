@@ -18,20 +18,18 @@ public abstract class Util {
 
     private static GLVersion initGLVersion() {
         if (Files.exists(cfgPath)) {
-            if (Files.isRegularFile(cfgPath))
-                try {
-                    var lines = Files.readAllLines(cfgPath);
-                    try {
-                        return GLVersion.fromList(lines);
-                    } catch (NumberFormatException | IndexOutOfBoundsException e) {
-                        LOG.error("Invalid config, example:" +
-                                  "\n4" +
-                                  "\n1");
-                        LOG.error("", e);
-                    }
-                } catch (IOException e) {
-                    LOG.error("Unexpected IOException while reading config", e);
-                }
+            try {
+                var lines = Files.readAllLines(cfgPath);
+
+                return GLVersion.fromList(lines);
+            } catch (IOException e) {
+                LOG.error("Unexpected IOException while reading config", e);
+            } catch (NumberFormatException | IndexOutOfBoundsException e) {
+                LOG.error("Invalid config, example:" +
+                        "\n4" +
+                        "\n1");
+                LOG.error("", e);
+            }
         } else try {
             LOG.info("no config exists, trying to create...");
             Files.write(cfgPath, GLVersion.DEFAULT.toList());
